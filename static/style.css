@@ -1,0 +1,28 @@
+body{
+    font-family: sans-serif;
+    color: white;
+    background-color: #4058A9;
+}
+
+.headline{
+text-align: center;
+}
+
+.buttons-container{
+text-align: center;
+}
+
+.login-btn,
+.register-btn{
+display: block;
+width: 200px;
+padding: 8px;
+margin: 15px auto;
+font-size: 20px;
+text-decoration: none;
+
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
