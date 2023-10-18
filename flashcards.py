@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import psycopg2
-from database import create_user, create_db_connection, check_user_existence
-
+from database import create_user, create_db_connection, check_user_existence, check_password_existence
 
 app = Flask(__name__)
 
@@ -18,10 +17,10 @@ def login_page():
         password = request.form['password']
 
         connection = create_db_connection()
-        stored_password = check_user_existence(connection, username)
-        print(stored_password)
+        check_username = check_user_existence(connection, username)
+        check_password = check_password_existence(connection, password)
 
-        if stored_password is not None and password == stored_password:
+        if check_username is True and check_password is True:
             return redirect("/")
         else:
             return "Błędne hasło lub nazwa użytkownika!"

@@ -34,3 +34,16 @@ def check_user_existence(connection, username):
         raise e
     finally:
         cursor.close()
+
+
+def check_password_existence(connection, password):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT password FROM users WHERE password = %s"
+        cursor.execute(query, [password])
+        user = cursor.fetchone()
+        return user is not None
+    except Exception as e:
+        raise e
+    finally:
+        cursor.close()
