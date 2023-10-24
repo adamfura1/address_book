@@ -13,7 +13,8 @@ text-align: center;
 }
 
 .login-btn,
-.register-btn{
+.register-btn,
+.users-btn{
 display: block;
 width: 200px;
 padding: 8px;
@@ -26,3 +27,8 @@ justify-content: center;
 align-items: center;
 }
 
+.logged_page {
+  background-color: black;
+  color: white;
+  height: 100vh;
+}

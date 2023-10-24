@@ -22,7 +22,7 @@ def login_page():
         check_password = check_password_existence(connection, password)
 
         if check_username is True and check_password is True:
-            return redirect("/")
+            return redirect("/logged_page")
         else:
             return "Błędne hasło lub nazwa użytkownika!"
 
@@ -67,6 +67,11 @@ def delete_user():
             raise e
 
     return redirect("/users")
+
+
+@app.route("/logged")
+def logged_page():
+    return render_template("/logged.html", title="Logged")
 
 
 if __name__ == "__main__":
