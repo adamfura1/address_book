@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect
 import psycopg2
-from database import create_user, create_db_connection, check_user_existence, check_password_existence
+from database import create_user, create_db_connection, check_user_existence, check_password_existence, get_all_users
 
 app = Flask(__name__)
+
+connection = create_db_connection()
 
 
 @app.route("/")
@@ -16,7 +18,6 @@ def login_page():
         username = request.form['username']
         password = request.form['password']
 
-        connection = create_db_connection()
         check_username = check_user_existence(connection, username)
         check_password = check_password_existence(connection, password)
 
@@ -33,10 +34,39 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        create_user(username, password)
-        return redirect('/login')
+
+        user_existence = check_user_existence(connection, username)
+        if user_existence is True:
+            return "Nazwa użytkownika jest już zajęta"
+
+        else:
+            create_user(connection, username, password)
+            return redirect('/login')
 
     return render_template("register.html", title="Rejestracja")
+
+
+@app.route("/users")
+def users_list():
+    users = get_all_users(connection)
+    return render_template("list_of_users.html", users=users, title="Users")
+
+
+@app.route("/delete_user", methods=["POST"])
+def delete_user():
+    user_id = request.form["id"]
+    if id:
+        try:
+            cursor = connection.cursor()
+            query = "DELETE FROM users WHERE id = %s"
+            cursor.execute(query, (user_id,))
+            connection.commit()
+            cursor.close()
+        except Exception as e:
+            connection.rollback()
+            raise e
+
+    return redirect("/users")
 
 
 if __name__ == "__main__":

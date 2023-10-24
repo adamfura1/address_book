@@ -47,3 +47,16 @@ def check_password_existence(connection, password):
         raise e
     finally:
         cursor.close()
+
+
+def get_all_users(connection):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT id, username FROM users"
+        cursor.execute(query)
+        users = cursor.fetchall()
+        return users
+    except Exception as e:
+        return e
+    finally:
+        cursor.close()
