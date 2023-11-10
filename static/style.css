@@ -1,7 +1,7 @@
 body{
     font-family: sans-serif;
     color: white;
-    background-color: #4058A9;
+    background-color: black;
 }
 
 .headline{
@@ -31,4 +31,44 @@ align-items: center;
   background-color: black;
   color: white;
   height: 100vh;
+}
+
+
+.user-menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+}
+
+.user-menu ul li {
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.user-menu .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    z-index: 1;
+}
+
+.user-menu .sub-menu li {
+    display: block;
+    padding: 10px;
+}
+
+.user-menu ul li:hover .sub-menu {
+    display: block;
+}
+
+a {
+    color: white;
 }

@@ -13,7 +13,7 @@ def first_page():
 
 
 @app.route("/login", methods=["GET", "POST"])
-def login_page():
+def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
@@ -22,11 +22,11 @@ def login_page():
         check_password = check_password_existence(connection, password)
 
         if check_username is True and check_password is True:
-            return redirect("/logged_page")
+            return redirect("/logged")
         else:
             return "Błędne hasło lub nazwa użytkownika!"
 
-    return render_template("login_page.html", title="Logowanie")
+    return render_template("login.html", title="Logowanie")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -46,10 +46,10 @@ def register():
     return render_template("register.html", title="Rejestracja")
 
 
-@app.route("/users")
+@app.route("/users_list")
 def users_list():
     users = get_all_users(connection)
-    return render_template("list_of_users.html", users=users, title="Users")
+    return render_template("users_list.html", users=users, title="Users")
 
 
 @app.route("/delete_user", methods=["POST"])
@@ -70,8 +70,13 @@ def delete_user():
 
 
 @app.route("/logged")
-def logged_page():
+def logged():
     return render_template("/logged.html", title="Logged")
+
+
+@app.route("/change_password")
+def change_password():
+    return render_template("/change_password.html", title="change_password")
 
 
 if __name__ == "__main__":

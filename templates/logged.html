@@ -2,14 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Strona użytkownika</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<div class="user-menu">
+    <ul>
+        <li>
+            <a href="#" id="ustawienia">Ustawienia</a>
+            <ul class="sub-menu" id="ustawienia-menu">
+                <li><a href="{{ url_for('change_password') }}">Zmień hasło</a></li>
+                <li><a href="#">Opis</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Lista kontaktów</a></li>
+        <li><a href="#">Zarządzaj kontaktami</a></li>
+    </ul>
+</div>
+
 <div class="logged_page">
     <p>Tu jest treść nowej strony.</p>
 </div>
+
+<script>
+    document.getElementById('profile').addEventListener('click', function(e) {
+        e.preventDefault();
+        var profileMenu = document.getElementById('profile-menu');
+        if (profileMenu.style.display === 'block') {
+            profileMenu.style.display = 'none';
+        } else {
+            profileMenu.style.display = 'block';
+        }
+    });
+</script>
 
 </body>
 </html>
