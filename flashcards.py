@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, redirect
 import psycopg2
-from database import create_user, create_db_connection, check_user_existence, check_password_existence, get_all_users
+from database import (
+    create_user,
+    create_db_connection,
+    check_user_existence,
+    check_password_existence,
+    get_all_users,
+    delete_user
+)
 
 app = Flask(__name__)
 
@@ -46,27 +53,19 @@ def register():
     return render_template("register.html", title="Rejestracja")
 
 
-@app.route("/users_list")
+@app.route("/users", methods=["GET", "POST"])
 def users_list():
+    if request.method == "POST":
+        user_id = request.form.get("id")
+        if user_id:
+            result = delete_user(connection, user_id)
+            if result:
+                return redirect("/users")
+            else:
+                return "Błąd podczas usuwania użytkownika."
+
     users = get_all_users(connection)
-    return render_template("users_list.html", users=users, title="Users")
-
-
-@app.route("/delete_user", methods=["POST"])
-def delete_user():
-    user_id = request.form["id"]
-    if id:
-        try:
-            cursor = connection.cursor()
-            query = "DELETE FROM users WHERE id = %s"
-            cursor.execute(query, (user_id,))
-            connection.commit()
-            cursor.close()
-        except Exception as e:
-            connection.rollback()
-            raise e
-
-    return redirect("/users")
+    return render_template("users.html", users=users, title="Users")
 
 
 @app.route("/logged")

@@ -60,3 +60,16 @@ def get_all_users(connection):
         return e
     finally:
         cursor.close()
+
+
+def delete_user(connection, user_id):
+    try:
+        cursor = connection.cursor()
+        query = "DELETE FROM users WHERE id = %s"
+        cursor.execute(query, (user_id,))
+        connection.commit()
+        cursor.close()
+        return True
+    except Exception as e:
+        connection.rollback()
+        return False
