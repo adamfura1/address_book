@@ -72,3 +72,12 @@ align-items: center;
 a {
     color: white;
 }
+
+.contact-form {
+width: 100px;
+}
+
+.contact-form input {
+  width: 200px;
+  margin-bottom: 10px;
+}

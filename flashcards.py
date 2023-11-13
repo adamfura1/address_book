@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect
-import psycopg2
 from database import (
     create_user,
     create_db_connection,
@@ -8,6 +7,7 @@ from database import (
     get_all_users,
     delete_user
 )
+
 
 app = Flask(__name__)
 
@@ -76,6 +76,16 @@ def logged():
 @app.route("/change_password")
 def change_password():
     return render_template("/change_password.html", title="change_password")
+
+
+@app.route("/contacts")
+def contacts():
+    return render_template("/contacts.html", title="Contacts")
+
+
+@app.route("/contacts_management")
+def contacts_management():
+    return render_template("/contacts_management.html", title="Contacts management")
 
 
 if __name__ == "__main__":
