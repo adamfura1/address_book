@@ -6,6 +6,9 @@
 
     <h2 class="headline">Twoje kontakty</h2><br>
 
+  {% for contact in contacts %}
+    <p>{{ contact[0] }} {{ contact[1] }}</p>
+  {% endfor %}
 
 
 {% endblock %}

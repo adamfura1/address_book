@@ -23,6 +23,19 @@ def create_user(connection, username, password):
         cursor.close()
 
 
+def create_user_for_logged(connection, user_id, name, last_name):
+    cursor = connection.cursor()
+    try:
+        query = """INSERT INTO contacts (user_id, name, last_name) VALUES (%s, %s, %s)"""
+        cursor.execute(query, (user_id, name, last_name))
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        raise e
+    finally:
+        cursor.close()
+
+
 def check_user_existence(connection, username):
     cursor = connection.cursor()
     try:
@@ -73,3 +86,29 @@ def delete_user(connection, user_id):
     except Exception as e:
         connection.rollback()
         return False
+
+
+def get_id_by_username(connection, username):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT id FROM users WHERE username = %s"
+        cursor.execute(query, [username])
+        _id = cursor.fetchone()
+        return _id[0] if _id else None
+    except Exception as e:
+        raise e
+    finally:
+        cursor.close()
+
+
+def get_contacts_by_user_id(connection, user_id):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT name, last_name FROM contacts WHERE user_id = %s"
+        cursor.execute(query, (user_id,))
+        contacts = cursor.fetchall()
+        return contacts
+    except Exception as e:
+        return e
+    finally:
+        cursor.close()

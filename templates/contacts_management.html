@@ -5,6 +5,9 @@
 {% block content%}
 
   <h1>Dodaj nowy kontakt</h1>
+  <form method="post" action="{{ url_for('logout') }}">
+    <button type="submit">Wyloguj się</button>
+  </form>
 
   <form method="POST" class="contact-form">
     <label for="name">Name</label>
