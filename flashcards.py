@@ -9,7 +9,8 @@ from database import (
     delete_user,
     get_id_by_username,
     create_user_for_logged,
-    get_contacts_by_user_id
+    get_contacts_by_user_id,
+    get_user_by_id
 )
 
 
@@ -119,7 +120,7 @@ def contacts_management():
     if request.method == "POST":
         name = request.form["name"]
         last_name = request.form["last_name"]
-        user_id = session.get('id')
+        user_id = session.get('user_id')
         create_user_for_logged(connection, user_id, name, last_name)
 
     return render_template("/contacts_management.html", title="Contacts management")
@@ -129,6 +130,12 @@ def contacts_management():
 def logout():
     session.clear()
     return redirect(url_for('first_page'))
+
+
+@app.route("/user_profile/<int:contact_id>")
+def user_profile(contact_id):
+    user_info = get_user_by_id(connection, contact_id)
+    return render_template("user_profile.html", title="User Profile", user_info=user_info)
 
 
 if __name__ == "__main__":

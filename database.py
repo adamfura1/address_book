@@ -104,10 +104,23 @@ def get_id_by_username(connection, username):
 def get_contacts_by_user_id(connection, user_id):
     cursor = connection.cursor()
     try:
-        query = "SELECT name, last_name FROM contacts WHERE user_id = %s"
+        query = "SELECT id, name, last_name FROM contacts WHERE user_id = %s"
         cursor.execute(query, (user_id,))
         contacts = cursor.fetchall()
         return contacts
+    except Exception as e:
+        return e
+    finally:
+        cursor.close()
+
+
+def get_user_by_id(connection, user_id):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT * FROM users WHERE id = %s"
+        cursor.execute(query, (user_id,))
+        user_info = cursor.fetchall()
+        return user_info
     except Exception as e:
         return e
     finally:
