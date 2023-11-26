@@ -23,11 +23,12 @@ def create_user(connection, username, password):
         cursor.close()
 
 
-def create_user_for_logged(connection, user_id, name, last_name):
+def create_user_for_logged(connection, user_id, name, last_name, phone_number, email, address):
     cursor = connection.cursor()
     try:
-        query = """INSERT INTO contacts (user_id, name, last_name) VALUES (%s, %s, %s)"""
-        cursor.execute(query, (user_id, name, last_name))
+        query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES 
+                                        (%s, %s, %s, %s, %s, %s)"""
+        cursor.execute(query, (user_id, name, last_name, phone_number, email, address))
         connection.commit()
     except Exception as e:
         connection.rollback()
@@ -35,7 +36,7 @@ def create_user_for_logged(connection, user_id, name, last_name):
     finally:
         cursor.close()
 
-
+# nieużywana funkcja - zdecydować co z nią zrobić
 def check_user_existence(connection, username):
     cursor = connection.cursor()
     try:
@@ -123,5 +124,32 @@ def get_user_by_id(connection, user_id):
         return user_info
     except Exception as e:
         return e
+    finally:
+        cursor.close()
+
+
+def get_contact_info_by_id(connection, contact_id):
+    cursor = connection.cursor()
+    try:
+        query = "SELECT phone_number, email, address FROM contacts WHERE id = %s"
+        cursor.execute(query, (contact_id,))
+        contact_info = cursor.fetchone()
+        return contact_info
+    except Exception as e:
+        return e
+    finally:
+        cursor.close()
+
+
+def create_contact_for_logged(connection, user_id, name, last_name, phone_number=None, email=None, address=None):
+    cursor = connection.cursor()
+    try:
+        query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES 
+                                        (%s, %s, %s, %s, %s, %s)"""
+        cursor.execute(query, (user_id, name, last_name, phone_number, email, address))
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        raise e
     finally:
         cursor.close()

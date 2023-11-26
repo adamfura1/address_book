@@ -5,11 +5,17 @@
 {% block content %}
 
     <h2 class="headline">Profil użytkownika</h2><br>
-    {% for user in user_info %}
-        <p>Imię: {{ user[1] }}</p>
-        <p>Nazwisko: {{ user[2] }}</p>
-        <!-- Dodaj więcej informacji o użytkowniku -->
-    {% endfor %}
+
+    {% if user_info %}
+        <p>Imię: {{ user_info[0][1] }}</p>
+        <p>Nazwisko: {{ user_info[0][2] }}</p>
+    {% endif %}
+
+    {% if contact_info %}
+        <p>Phone: {{ contact_info[0] }}</p>
+        <p>Email: {{ contact_info[1] }}</p>
+        <p>Address: {{ contact_info[2] }}</p>
+    {% endif %}
 
 {% endblock %}
 
