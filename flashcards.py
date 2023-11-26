@@ -117,9 +117,9 @@ def contacts():
         return redirect(url_for('login'))
 
 
-@app.route("/contacts_management", methods=["GET", "POST"])
+@app.route("/add_new_contact", methods=["GET", "POST"])
 #@login_required
-def contacts_management():
+def add_new_contact():
     if request.method == "POST":
         name = request.form["name"]
         last_name = request.form["last_name"]
@@ -130,7 +130,7 @@ def contacts_management():
         create_contact_for_logged(connection, user_id, name, last_name, phone_number,
                                   email, address)
 
-    return render_template("/contacts_management.html", title="Contacts management")
+    return render_template("/add_new_contact.html", title="Dodaj nowy kontakt")
 
 
 @app.route("/logout", methods=['POST'])
