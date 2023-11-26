@@ -11,7 +11,8 @@ from database import (
     create_contact_for_logged,
     get_contacts_by_user_id,
     get_user_by_id,
-    get_contact_info_by_id
+    get_contact_info_by_id,
+    change_password
 )
 
 
@@ -20,23 +21,6 @@ app.secret_key = 'some_secret_key' # Klucz do szyfrowania sesji
 #login_manager = LoginManager(app)
 
 connection = create_db_connection()
-
-
-# class User(UserMixin):
-#     def __init__(self, user_id, username):
-#         self.id = user_id
-#         self.username = username
-#
-# @login_manager.user_loader
-# def load_user(user_id):
-#     # Tutaj musisz zaimplementować kod do pobrania użytkownika z bazy danych na podstawie ID
-#     user_data = get_user_by_id(user_id)
-#
-#     if user_data:
-#         user = User(user_data['id'], user_data['username'])
-#         return user
-#     else:
-#         return None
 
 
 @app.route("/")
@@ -100,8 +84,25 @@ def logged():
     return render_template("/logged.html", title="Logged")
 
 
-@app.route("/change_password")
-def change_password():
+@app.route("/change_password", methods=["GET", "POST"])
+def change_password_route():
+    user_id = session.get('user_id')
+
+    if request.method == "POST":
+        old_password = request.form["old_password"]
+        new_password = request.form["new_password"]
+        new_password_repeat = request.form["new_password_repeat"]
+
+        if new_password != new_password_repeat:
+            return "New passwords do not match"
+
+        result = change_password(connection, user_id, old_password, new_password)
+
+        if result is None:
+            return "Password changed successfully"
+        else:
+            return result
+
     return render_template("/change_password.html", title="change_password")
 
 

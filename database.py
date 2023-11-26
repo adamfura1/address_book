@@ -23,18 +23,18 @@ def create_user(connection, username, password):
         cursor.close()
 
 
-def create_user_for_logged(connection, user_id, name, last_name, phone_number, email, address):
-    cursor = connection.cursor()
-    try:
-        query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES 
-                                        (%s, %s, %s, %s, %s, %s)"""
-        cursor.execute(query, (user_id, name, last_name, phone_number, email, address))
-        connection.commit()
-    except Exception as e:
-        connection.rollback()
-        raise e
-    finally:
-        cursor.close()
+# def create_user_for_logged(connection, user_id, name, last_name, phone_number, email, address):
+#     cursor = connection.cursor()
+#     try:
+#         query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES
+#                                         (%s, %s, %s, %s, %s, %s)"""
+#         cursor.execute(query, (user_id, name, last_name, phone_number, email, address))
+#         connection.commit()
+#     except Exception as e:
+#         connection.rollback()
+#         raise e
+#     finally:
+#         cursor.close()
 
 # nieużywana funkcja - zdecydować co z nią zrobić
 def check_user_existence(connection, username):
@@ -59,6 +59,32 @@ def check_password_existence(connection, password):
         return user is not None
     except Exception as e:
         raise e
+    finally:
+        cursor.close()
+
+
+def change_password(connection, user_id, old_password, new_password):
+    cursor = connection.cursor()
+    try:
+        # Sprawdź czy stare hasło jest poprawne
+        query_check_old_password = "SELECT password FROM users WHERE id = %s"
+        cursor.execute(query_check_old_password, (user_id,))
+        stored_password = cursor.fetchone()[0]
+
+        if stored_password != old_password:
+            return "Old password is incorrect!"
+
+        # Zmiana hasła użytkownika
+        query_change_password = "UPDATE users SET password = %s WHERE id = %s"
+        cursor.execute(query_change_password, (new_password, user_id))
+        connection.commit()
+
+        return None # Zwróc None, aby oznaczyć udaną zmianę hasła
+
+    except Exception as e:
+        connection.rollback()
+        return str(e)
+
     finally:
         cursor.close()
 
@@ -141,7 +167,7 @@ def get_contact_info_by_id(connection, contact_id):
         cursor.close()
 
 
-def create_contact_for_logged(connection, user_id, name, last_name, phone_number=None, email=None, address=None):
+def create_contact_for_logged(connection, user_id, name, last_name, phone_number, email, address):
     cursor = connection.cursor()
     try:
         query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES 
