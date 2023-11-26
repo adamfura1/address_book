@@ -12,13 +12,13 @@ from database import (
     get_contacts_by_user_id,
     get_user_by_id,
     get_contact_info_by_id,
-    change_password
+    change_password,
+    delete_contact_from_db
 )
 
 
 app = Flask(__name__)
 app.secret_key = 'some_secret_key' # Klucz do szyfrowania sesji
-#login_manager = LoginManager(app)
 
 connection = create_db_connection()
 
@@ -131,6 +131,16 @@ def add_new_contact():
                                   email, address)
 
     return render_template("/add_new_contact.html", title="Dodaj nowy kontakt")
+
+@app.route("/delete_contact/<int:contact_id>", methods=["POST"])
+def delete_contact(contact_id):
+    user_id = session.get('user_id')
+    # Dodaj funkcję do usuwania kontaktu z bazy danych na podstawie contact_id
+    delete_contact_from_db(connection, user_id, contact_id)
+    # Aktualizuj listę kontaktów
+    contacts_ = get_contacts_by_user_id(connection, user_id)
+    return render_template("contacts.html", title="Contacts", contacts=contacts_)
+
 
 
 @app.route("/logout", methods=['POST'])

@@ -8,22 +8,11 @@
 <body>
 
 <div class="user-menu">
-    <ul>
-        <li>
-            <a href="#" id="ustawienia">Ustawienia</a>
-            <ul class="sub-menu" id="ustawienia-menu">
-                <li><a href="{{ url_for('change_password_route') }}">Zmień hasło</a></li>
-                <li><a href="#">Opis</a></li>
-            </ul>
-        </li>
-        <li><a href="{{ url_for('contacts') }}">Lista kontaktów</a></li>
-        <li><a href="{{ url_for('add_new_contact') }}">Dodaj kontakt</a></li>
-    </ul>
+    <a href="{{ url_for('change_password_route') }}">Zmień hasło</a>
+    <a href="{{ url_for('contacts') }}">Lista kontaktów</a>
+    <a href="{{ url_for('add_new_contact') }}">Dodaj kontakt</a>
 </div>
 
-<div class="logged_page">
-    <p>Tu jest treść nowej strony.</p>
-</div>
 
 <script>
     document.getElementById('profile').addEventListener('click', function(e) {

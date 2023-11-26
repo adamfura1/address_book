@@ -179,3 +179,16 @@ def create_contact_for_logged(connection, user_id, name, last_name, phone_number
         raise e
     finally:
         cursor.close()
+
+
+def delete_contact_from_db(connection, user_id, contact_id):
+    cursor = connection.cursor()
+    try:
+        query = "DELETE FROM contacts WHERE user_id = %s AND id = %s"
+        cursor.execute(query, (user_id, contact_id))
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        raise e
+    finally:
+        cursor.close()

@@ -1,83 +1,57 @@
-body{
+body {
     font-family: sans-serif;
     color: white;
     background-color: black;
+    text-align: center;
 }
 
-.headline{
-text-align: center;
+.headline {
+    text-align: center;
 }
 
-.buttons-container{
-text-align: center;
+.buttons-container {
+    text-align: center;
+    margin-top: 40px; /* Dodaj margines na górę, aby oddzielić od treści */
 }
 
 .login-btn,
 .register-btn,
-.users-btn{
-display: block;
-width: 200px;
-padding: 8px;
-margin: 15px auto;
-font-size: 20px;
-text-decoration: none;
-
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.logged_page {
-  background-color: black;
-  color: white;
-  height: 100vh;
-}
-
-
-.user-menu ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-    background-color: #333;
-}
-
-.user-menu ul li {
-    position: relative;
-    padding: 10px;
-    cursor: pointer;
-    color: white;
+.users-btn {
+    display: block;
+    width: 200px;
+    padding: 8px;
+    margin: 15px auto;
+    font-size: 20px;
     text-decoration: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.user-menu .sub-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #333;
-    z-index: 1;
-}
 
-.user-menu .sub-menu li {
-    display: block;
-    padding: 10px;
-}
-
-.user-menu ul li:hover .sub-menu {
-    display: block;
-}
 
 a {
     color: white;
 }
 
 .contact-form {
-width: 100px;
+    width: 100px;
 }
 
 .contact-form input {
-  width: 200px;
-  margin-bottom: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.contact-info {
+    flex-grow: 1; /* Rozciągnij, aby zająć dostępną przestrzeń */
+}
+
+.delete-button {
+    margin-left: 10px; /* Lub inna wartość, aby dostosować odstęp */
+}
+
+.contact-separator {
+    margin-bottom: 40px;
 }
