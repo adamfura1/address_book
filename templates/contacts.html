@@ -6,6 +6,13 @@
 
     <h2 class="headline">Twoje kontakty</h2><br>
 
+<div class="back-button-container">
+  <a href="{{ url_for('logged') }}">
+    <button type="button" class="back-button">Cofnij</button>
+  </a>
+</div>
+
+
 {% for contact in contacts %}
     <div class="contact-container">
         <div class="contact-info">
@@ -13,7 +20,7 @@
                 <a href="{{ url_for('user_profile', contact_id=contact[0]) }}">
                     {{ contact[1] }} {{ contact[2] }}
                 </a>
-                - Phone: {{ contact[3] }}, Email: {{ contact[4] }}, Address: {{ contact[5] }}
+
             </p>
         </div>
         <div class="delete-button">

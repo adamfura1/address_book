@@ -142,7 +142,6 @@ def delete_contact(contact_id):
     return render_template("contacts.html", title="Contacts", contacts=contacts_)
 
 
-
 @app.route("/logout", methods=['POST'])
 def logout():
     session.clear()

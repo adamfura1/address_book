@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +9,16 @@
 <body>
 
 <div class="user-menu">
-    <a href="{{ url_for('change_password_route') }}">Zmień hasło</a>
-    <a href="{{ url_for('contacts') }}">Lista kontaktów</a>
-    <a href="{{ url_for('add_new_contact') }}">Dodaj kontakt</a>
+    <a href="{{ url_for('change_password_route') }}" class="menu-option">Zmień hasło</a>
+    <a href="{{ url_for('contacts') }}" class="menu-option">Lista kontaktów</a>
+    <a href="{{ url_for('add_new_contact') }}" class="menu-option">Dodaj kontakt</a>
 </div>
 
+<div class="buttons-container">
+    <form method="post" action="{{ url_for('logout') }}">
+        <button type="submit" class="logout-btn">Wyloguj się</button>
+    </form>
+</div>
 
 <script>
     document.getElementById('profile').addEventListener('click', function(e) {

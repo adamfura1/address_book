@@ -4,17 +4,19 @@
 
 {% block content%}
 
-<ul>
+
+
 {% for i in users %}
-  <li>
+
     {{ i[1] }}
     <form action="/users" method="POST">
       <input type="hidden" name="id" value="{{ i[0] }}">
       <button type="submit" class="delete-user-btn">Usuń</button>
     </form>
-  </li>
+    <br>
+    <br>
 {% endfor %}
-</ul>
+
 
 <script>
   // Pobierz wszystkie przyciski "Usuń"
