@@ -32,6 +32,25 @@
     <div class="contact-separator"></div>
 {% endfor %}
 
+<script>
+  // Pobierz wszystkie przyciski "Usuń"
+  const deleteButtons = document.querySelectorAll('.delete-user-btn');
+
+  // Dodaj obsługę zdarzenia kliknięcia dla każdego przycisku "Usuń"
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      event.preventDefault();
+      // Wyświetl okno dialogowe z pytaniem
+      const confirmed = confirm("Czy na pewno chcesz usunąć tego użytkownika?");
+
+      // Jeśli użytkownik potwierdzi, prześlij formularz do usunięcia użytkownika
+      if (confirmed) {
+        button.closest('form').submit();
+      }
+    });
+  });
+</script>
+
 
 
 {% endblock %}
