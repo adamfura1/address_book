@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, session, url_for
-from flask_login import LoginManager, UserMixin, current_user
 from database import (
     create_user,
     create_db_connection,
@@ -118,7 +117,6 @@ def contacts():
 
 
 @app.route("/add_new_contact", methods=["GET", "POST"])
-#@login_required
 def add_new_contact():
     if request.method == "POST":
         name = request.form["name"]
@@ -135,9 +133,7 @@ def add_new_contact():
 @app.route("/delete_contact/<int:contact_id>", methods=["POST"])
 def delete_contact(contact_id):
     user_id = session.get('user_id')
-    # Dodaj funkcję do usuwania kontaktu z bazy danych na podstawie contact_id
     delete_contact_from_db(connection, user_id, contact_id)
-    # Aktualizuj listę kontaktów
     contacts_ = get_contacts_by_user_id(connection, user_id)
     return render_template("contacts.html", title="Contacts", contacts=contacts_)
 

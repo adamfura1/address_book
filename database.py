@@ -1,11 +1,6 @@
 import psycopg2
 
 
-# TODO ten plik musi być rozdzielony pomiędzy logowanie i rejestracje
-# ze względu na to, że zapytanie INSERT będzie miało mniej kolumn niż przy logowaniu
-
-
-# Funkcja do tworzenia połączenia do bazy danych
 def create_db_connection():
     return psycopg2.connect("postgresql://postgres:postgres@localhost:5432/address_book_db")
 
@@ -23,20 +18,6 @@ def create_user(connection, username, password):
         cursor.close()
 
 
-# def create_user_for_logged(connection, user_id, name, last_name, phone_number, email, address):
-#     cursor = connection.cursor()
-#     try:
-#         query = """INSERT INTO contacts (user_id, name, last_name, phone_number, email, address) VALUES
-#                                         (%s, %s, %s, %s, %s, %s)"""
-#         cursor.execute(query, (user_id, name, last_name, phone_number, email, address))
-#         connection.commit()
-#     except Exception as e:
-#         connection.rollback()
-#         raise e
-#     finally:
-#         cursor.close()
-
-# nieużywana funkcja - zdecydować co z nią zrobić
 def check_user_existence(connection, username):
     cursor = connection.cursor()
     try:
@@ -66,7 +47,6 @@ def check_password_existence(connection, password):
 def change_password(connection, user_id, old_password, new_password):
     cursor = connection.cursor()
     try:
-        # Sprawdź czy stare hasło jest poprawne
         query_check_old_password = "SELECT password FROM users WHERE id = %s"
         cursor.execute(query_check_old_password, (user_id,))
         stored_password = cursor.fetchone()[0]
@@ -74,12 +54,11 @@ def change_password(connection, user_id, old_password, new_password):
         if stored_password != old_password:
             return "Old password is incorrect!"
 
-        # Zmiana hasła użytkownika
         query_change_password = "UPDATE users SET password = %s WHERE id = %s"
         cursor.execute(query_change_password, (new_password, user_id))
         connection.commit()
 
-        return None # Zwróc None, aby oznaczyć udaną zmianę hasła
+        return None
 
     except Exception as e:
         connection.rollback()
